@@ -35,8 +35,13 @@ exports.handleRequest = function (req, res) {
 
   if (req.method === 'POST') {
     // check sites.txt to see if url is there
-    archive.readListOfUrls();
-    res.end();
+    //console.log(req);
+    req.on('data', function(data){
+      var url = data.toString('utf8').split('=')[1];
+      console.log("data:", url);
+      archive.readListOfUrls(url, res);
+    });
+
 
   }
 
