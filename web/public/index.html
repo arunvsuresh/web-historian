@@ -1,12 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="styles.css" /> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"> </script>
+  <!-- <script>
+  $(document).ready(function(){
+    $('.submitButton').on('click', function(){
+      console.log('hey');
+      $.ajax({
+        // always use this url
+        url: 'http://127.0.0.1:8080',
+        type: 'POST',
+        // how data is presented
+        data: $('.urlInput').val(),
+        contentType: 'text/plain',
+        success: function (data) {
+          console.log('successful post');
+        },
+        error: function (data) {
+          // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+          console.error('failed to post');
+        }
+      });
+    });
+  });
+</script> -->
 </head>
+
+
 <body>
   Enter a URL here:
   <form method="POST">
-    <input type="input" name="url"></input>
+    <input type="input" name="url" class="urlInput"></input>
+    <button type='submit' class='submitButton'>Submit</button>
   </form>
 </body>
+
+
+
 </html>
