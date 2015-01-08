@@ -12,7 +12,7 @@ var helpers = require('../web/http-helpers');
 
 exports.paths = {
   'siteAssets' : path.join(__dirname, '../web/public'),
-  'archivedSites' : path.join(__dirname, '../archives/sites'),
+  'archivedSites' : path.join(__dirname, '../web/archives/sites'),
   'list' : path.join(__dirname, '../web/archives/sites.txt')
 };
 
@@ -35,8 +35,14 @@ exports.readListOfUrls = function(url, res){
     var lastItem = storage.pop();
 
     if(!exports.isUrlInList(storage, url)) {
-      console.log('not in list');
       exports.addUrlToList(url, res);
+    } else { // URL is in site.txt
+      if(exports.isURLArchived(url)) {
+        // serveAssets
+        helpers.serveAssets(res, url);
+      } else {
+        loadHTML(res);
+      }
     }
 
 
@@ -57,19 +63,28 @@ exports.isUrlInList = function(urlStorage, url){
 exports.addUrlToList = function(url, res){
     fs.appendFile(exports.paths['list'], url +'\n', function(err) {
       if(err) throw err;
-      console.log('added to list?');
     })
-    fs.readFile(exports.paths['siteAssets'] + '/loading.html', 'UTF-8', function(err, data){
-        if (err) throw err;
-        res.writeHead(201, helpers.headers);
-        res.end(data);
-        console.log('sent loading.html');
-      });
+    loadHTML(res);
 };
 
-exports.isURLArchived = function(){
+exports.isURLArchived = function(url){
+  var urlPath = exports.paths['archivedSites'] + "/" + url + ".html";
+  if(fs.existsSync(urlPath)) {
+    return true;
+  } else {
+    return false;
+  }
+
 };
 
 exports.downloadUrls = function(){
 
 };
+
+var loadHTML = function(res) {
+  fs.readFile(exports.paths['siteAssets'] + '/loading.html', 'UTF-8', function(err, data){
+        if (err) throw err;
+        res.writeHead(201, helpers.headers);
+        res.end(data);
+      });
+}

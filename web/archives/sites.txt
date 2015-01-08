@@ -1,7 +1,2 @@
-example1.com
-example2.com
-example3.com
 google.com
 espn.com
-facebook.com
-twilio.com

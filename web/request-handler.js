@@ -8,8 +8,6 @@ var fs = require('fs');
 exports.handleRequest = function (req, res) {
   //res.end(archive.paths.list);
   if (req.method === 'GET') {
-    console.log(req.url);
-    console.log('get');
     if (req.url === '/') {
       res.writeHead(200, helpers.headers);
       fs.readFile('public/index.html', 'UTF-8', function(err, data){
@@ -38,7 +36,6 @@ exports.handleRequest = function (req, res) {
     //console.log(req);
     req.on('data', function(data){
       var url = data.toString('utf8').split('=')[1];
-      console.log("data:", url);
       archive.readListOfUrls(url, res);
     });
 
