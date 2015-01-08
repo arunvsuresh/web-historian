@@ -1,2 +1,6 @@
 google.com
 espn.com
+www.reddit.com
+gawker.com
+microsoft.com
+theonion.com
