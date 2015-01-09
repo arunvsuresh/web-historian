@@ -1,4 +1,4 @@
-archives/*
+web/archives/sites/*
 archives/*.txt
 
 ###OSX###

@@ -8,6 +8,7 @@ var fs = require('fs');
 exports.handleRequest = function (req, res) {
   //res.end(archive.paths.list);
   if (req.method === 'GET') {
+    console.log(req.url);
     if (req.url === '/') {
       res.writeHead(200, helpers.headers);
       fs.readFile('public/index.html', 'UTF-8', function(err, data){
@@ -15,20 +16,14 @@ exports.handleRequest = function (req, res) {
           res.end(data);
         });
    }
-   // else {
-    //   // var headers = {
-    //   //       "access-control-allow-origin": "*",
-    //   //       "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
-    //   //       "access-control-allow-headers": "content-type, accept",
-    //   //       "access-control-max-age": 10, // Seconds.
-    //   //       'Content-Type': "text/css"
-    //   //     };
-    //   res.writeHead(200, helpers.headers);
-    //   fs.readFile('public' + req.url, 'UTF-8', function(err, data){
-    //       if (err) throw err;
-    //       res.end(data);
-    //     });
-    // }
+   else if (req.url === '/styles.css' || req.url === '/favicon.ico') {
+      res.writeHead(200, helpers.headers);
+      console.log('public' + req.url);
+      fs.readFile('public' + req.url, 'UTF-8', function(err, data){
+          if (err) throw err;
+          res.end(data);
+        });
+    }
   }
 
   if (req.method === 'POST') {
@@ -38,9 +33,7 @@ exports.handleRequest = function (req, res) {
       var url = data.toString('utf8').split('=')[1];
       archive.readListOfUrls(url, res);
     });
-
-
-  }
+}
 
 
 };
